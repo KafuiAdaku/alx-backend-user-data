@@ -2,6 +2,8 @@
 """Logging module"""
 import logging
 from typing import List
+import mysql.connector
+import os
 import re
 from typing import List
 
@@ -41,6 +43,18 @@ def get_logger() -> logging.Logger:
     stream.setFormatter(formatter)
     logger.addHandler(stream)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    returns a connector to the database
+    """
+    return mysql.connector.connect(
+        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        database=os.getenv('PERSONAL_DATA_DB_NAME')
+    )
 
 
 class RedactingFormatter(logging.Formatter):
