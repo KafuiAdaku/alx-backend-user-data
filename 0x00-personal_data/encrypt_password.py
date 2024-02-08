@@ -8,9 +8,8 @@ def hash_password(password: str) -> str:
     Args:
         password: password to be hashed
 
-    Returns: hashed password
+    Returns: hashed password as a byte string
     """
-    pwd = password.encode('utf-8')
+    pwd = password.encode()
     hashed = bcrypt.hashpw(pwd, bcrypt.gensalt())
-    if bcrypt.checkpw(pwd, hashed):
-        return hashed
+    return hashed
