@@ -2,6 +2,7 @@
 """API management module"""
 from flask import request
 from typing import List, TypeVar
+import fnmatch
 
 
 class Auth:
@@ -20,8 +21,9 @@ class Auth:
             path += "/"
         exluded_paths = [pth + "/" if pth[-1] != "/" else pth
                          for pth in excluded_paths]
-        if path in excluded_paths:
-            return False
+        for pth in excluded_paths:
+            if fnmatch.fnmatch(path, pth):
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
