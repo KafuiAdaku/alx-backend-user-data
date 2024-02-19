@@ -3,6 +3,7 @@
 from flask import request
 from typing import List, TypeVar
 import fnmatch
+import os
 
 
 class Auth:
@@ -52,3 +53,17 @@ class Auth:
         # if header:
         #     return header
         return None
+    
+    def session_cookie(self, request=None):
+        """session cookie
+            Args:
+                request : Flask request object
+
+                Returns: None if no cookie or the value of the cookie
+        """
+        if request is None:
+            return None
+        session_name = os.getenv("SESSION_NAME")
+        if not request.cookies.get(session_name):
+            return None
+        return request.cookies.get(session_name)
