@@ -53,13 +53,13 @@ class Auth:
         # if header:
         #     return header
         return None
-    
+
     def session_cookie(self, request=None):
         """session cookie
             Args:
                 request : Flask request object
 
-                Returns: None if no cookie or the value of the cookie
+            Returns: None if no cookie or the value of the cookie
         """
         if request is None:
             return None
