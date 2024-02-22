@@ -50,5 +50,5 @@ class SessionDBAuth(SessionExpAuth):
             return False
         if not user_sessions:
             return False
-        user_session[0].remove()
+        user_sessions[0].remove()
         return True
