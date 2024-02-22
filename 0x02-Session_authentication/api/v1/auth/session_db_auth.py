@@ -24,9 +24,6 @@ class SessionDBAuth(SessionExpAuth):
         if not user_sessions:
             return None
         user_session = user_sessions[0]  # session id is unique
-        sess_dict = self.user_id_by_session_id.get(session_id)
-        if sess_dict is None:
-            return None
         if self.session_duration <= 0:
             return user_session.user_id
         if not user_session.created_at:
