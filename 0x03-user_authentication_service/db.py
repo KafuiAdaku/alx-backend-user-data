@@ -52,11 +52,32 @@ class DB:
     def find_user_by(self, **kwargs: dict) -> list:
         """Returns a `User` object"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs).first()
             if user is None:
                 raise NoResultFound
             return user
         except NoResultFound:
             raise
         except InvalidRequestError:
+            raise
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Updates an already existing
+
+            Args:
+                user_id (int): user id
+                kwargs (dict): arbitrary keyword arguments
+
+            Returns: None
+        """
+        try:
+            user = self._session.query(User).filter_by(id=user_id).one()
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+            self._session.commit()
+        except NoResultFound:
             raise
