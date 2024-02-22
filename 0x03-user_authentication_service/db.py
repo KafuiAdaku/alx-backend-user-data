@@ -31,7 +31,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """
-        Saves and return a `User` object to the database
+        Saves  a `User` object to the database
             Args:
                 email (str): user email
                 hashed_password (str): user hashed password
@@ -42,6 +42,6 @@ class DB:
             self._session.add(user)
             self._session.commit()
         except Exception:
-            self._session.roollback()
+            self._session.rollback()
             user = None
         return user
