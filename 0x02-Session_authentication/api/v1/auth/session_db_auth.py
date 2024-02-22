@@ -20,7 +20,10 @@ class SessionDBAuth(SessionExpAuth):
         """Returns the user_id by requesting UserSession in the database"""
         if session_id is None:
             return None
-        user_sessions = UserSession.search({"session_id": session_id})
+        try:
+            user_sessions = UserSession.search({"session_id": session_id})
+        except Exception:
+            return None
         if not user_sessions:
             return None
         user_session = user_sessions[0]  # session id is unique
