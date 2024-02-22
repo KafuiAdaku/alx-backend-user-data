@@ -2,6 +2,8 @@
 """Session Authentication"""
 from .auth import Auth
 import uuid
+from models.user import User
+from typing import TypeVar
 
 
 class SessionAuth(Auth):
@@ -21,3 +23,16 @@ class SessionAuth(Auth):
         if session_id is None or not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Returns a `User` instance based on cookie value
+
+            Args:
+                request: Flask request object
+
+            Returns: A `User` object
+        """
+        session_cookie = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_cookie)
+        user = User.get(user_id)
+        return user
