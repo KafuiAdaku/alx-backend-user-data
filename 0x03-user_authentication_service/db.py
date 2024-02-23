@@ -50,7 +50,7 @@ class DB:
             user = None
         return user
 
-    def find_user_by(self, **kwargs: dict) -> list:
+    def find_user_by(self, **kwargs: dict) -> User:
         """Returns a `User` object"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
